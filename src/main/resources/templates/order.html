@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+
+  <div class="row col-md-6 offset-md-3">
+    <h1>Order List</h1>
+    <table style="width: 100%">
+      <tr valign="top">
+        <td>
+      <table>
+        <form name="myOrder" id="myOrder" th:action="@{/order}" method="post">
+          <tr>
+            <td>Item/SKU </td>
+            <td>
+              <select id="skuItem" name="skuItem">
+                <option th:each="sku : ${skus}" th:value="${sku}" th:text="${sku}"></option>
+              </select>
+            </td>
+            <td>Quantity </td>
+            <td>
+              <select id="quanItem" name="quanItem">
+                <option th:each="quan : ${quant}" th:value="${quan}" th:text="${quan}"></option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4" style="text-align: right"><button type="submit">Buy this!</button></td>
+          </tr>
+        </form>
+      </table>
+        </td>
+        <td style="text-align: right">
+          <table style="width: 100%" th:if="${not #lists.isEmpty(prices)}">
+            <tr>
+              <td style="text-align: justify">Item/SKU</td>
+              <td style="text-align: justify">Unit Price</td>
+            </tr>
+            <tr th:each="price : ${prices}">
+              <form th:action="@{|/price/${price.sku}|}" method="post">
+              <input id="sku" name="sku" type="hidden" th:value="${price.sku}" />
+              <td style="text-align: justify"><span th:text="${price.sku}"></span></td>
+              <td style="text-align: justify"><input id="unitPrice" name="unitPrice" type="text" size="5" th:value="${price.unitPrice}" /></td>
+              <td style="text-align: justify"><button type="submit">Set Unit Price!</button></td>
+              </form>
+            </tr>
+          </table>
+        </td>
+        <td style="text-align: right">
+          <table style="width: 100%" th:if="${not #lists.isEmpty(specials)}">
+            <tr>
+              <td style="text-align: justify">Skus List</td>
+              <td style="text-align: justify">One Free</td>
+              <td style="text-align: justify">Special Price</td>
+              <td style="text-align: justify">Special Price Description</td>
+            </tr>
+            <tr th:each="special : ${specials}">
+              <form th:action="@{|/specials/${special.sku}|}" method="post" th:object="${specials}">
+              <input id="skuSpecial" name="skuSpecial" type="hidden" th:value="${special.sku}" />
+              <td style="text-align: justify"><input id="nSku" name="nSku" type="text" size="5" th:value="${special.nSku}" /></td>
+              <td style="text-align: justify">
+                <select id="oneFree" name="oneFree">
+                  <option th:selected="${special.oneFree}" th:value=true th:text='True'></option>
+                  <option th:selected="not ${special.oneFree}" th:value=false th:text='False'></option>
+                </select>
+              </td>
+              <td style="text-align: justify"><input id="specialPrice" name="specialPrice" type="text" size="5" th:value="${special.specialPrice}" /></td>
+              <td style="text-align: justify"><input id="specialPriceDesc" name="specialPriceDesc" type="text" size="20" th:value="${special.specialPriceDesc}" /></td>
+              <td style="text-align: justify"><button type="submit">Set Special Params!</button></td>
+              </form>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="row col-md-6 offset-md-3">
+    <table>
+      <tr>
+        <td colspan="3"><h3>Your order:</h3></td>
+      </tr>
+      <tr th:if="${#lists.isEmpty(items)}">
+        <td colspan="3">Empty</td>
+      </tr>
+      <tr th:if="${not #lists.isEmpty(items)}">
+        <td>Item/SKU</td>
+        <td>Quantity</td>
+        <td>Price</td>
+      </tr>
+      <tr th:if="${not #lists.isEmpty(items)}" th:each="item : ${items}">
+        <td><span th:text="${item.sku}"></span></td>
+        <td><span th:text="${item.skuQuant}"></span></td>
+        <td><span th:text="${item.skuTotal}"></span></td>
+      </tr>
+      <tr th:if="${not #lists.isEmpty(items)}">
+        <td colspan="2"></td>
+        <td>Bill: <span th:text="${bill}"></span></td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>
