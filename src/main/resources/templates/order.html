@@ -8,8 +8,8 @@
     <table style="width: 100%">
       <tr valign="top">
         <td>
-      <table>
-        <form name="myOrder" id="myOrder" th:action="@{/order}" method="post">
+      <table style="border: 4px solid green">
+        <form name="myOrder" id="myOrder" th:action="@{/}" method="post">
           <tr>
             <td>Item/SKU </td>
             <td>
@@ -25,12 +25,12 @@
             </td>
           </tr>
           <tr>
-            <td colspan="4" style="text-align: right"><button type="submit">Buy this!</button></td>
+            <td colspan="4" style="text-align: right"><button type="submit">Add to Shopping Cart!</button></td>
           </tr>
         </form>
       </table>
         </td>
-        <td style="text-align: right">
+        <td style="text-align: right; border: 1px solid red">
           <table style="width: 100%" th:if="${not #lists.isEmpty(prices)}">
             <tr>
               <td style="text-align: justify">Item/SKU</td>
@@ -41,32 +41,33 @@
               <input id="sku" name="sku" type="hidden" th:value="${price.sku}" />
               <td style="text-align: justify"><span th:text="${price.sku}"></span></td>
               <td style="text-align: justify"><input id="unitPrice" name="unitPrice" type="text" size="5" th:value="${price.unitPrice}" /></td>
-              <td style="text-align: justify"><button type="submit">Set Unit Price!</button></td>
+              <td style="text-align: justify"><button type="submit">Set <th:block th:text="${price.sku}"></th:block> Unit Price!</button></td>
               </form>
             </tr>
           </table>
         </td>
-        <td style="text-align: right">
+        <td style="text-align: right; border: 1px solid red">
           <table style="width: 100%" th:if="${not #lists.isEmpty(specials)}">
             <tr>
               <td style="text-align: justify">Skus List</td>
-              <td style="text-align: justify">One Free</td>
               <td style="text-align: justify">Special Price</td>
               <td style="text-align: justify">Special Price Description</td>
+              <td style="text-align: justify">Active Promotion</td>
             </tr>
             <tr th:each="special : ${specials}">
               <form th:action="@{|/specials/${special.sku}|}" method="post" th:object="${specials}">
               <input id="skuSpecial" name="skuSpecial" type="hidden" th:value="${special.sku}" />
               <td style="text-align: justify"><input id="nSku" name="nSku" type="text" size="5" th:value="${special.nSku}" /></td>
-              <td style="text-align: justify">
-                <select id="oneFree" name="oneFree">
-                  <option th:selected="${special.oneFree}" th:value=true th:text='True'></option>
-                  <option th:selected="not ${special.oneFree}" th:value=false th:text='False'></option>
-                </select>
-              </td>
               <td style="text-align: justify"><input id="specialPrice" name="specialPrice" type="text" size="5" th:value="${special.specialPrice}" /></td>
               <td style="text-align: justify"><input id="specialPriceDesc" name="specialPriceDesc" type="text" size="20" th:value="${special.specialPriceDesc}" /></td>
-              <td style="text-align: justify"><button type="submit">Set Special Params!</button></td>
+              <td style="text-align: justify">
+                <select id="promotion" name="promotion">
+                  <option th:selected="${special.promotion} == 1" th:value="1" th:text="Multi_Priced"></option>
+                  <option th:selected="${special.promotion} == 2" th:value="2" th:text="One_Free"></option>
+                  <option th:selected="${special.promotion} == 3" th:value="3" th:text="Meal_DeaL"></option>
+                </select>
+              </td>
+              <td style="text-align: justify"><button type="submit">Set <th:block th:text="${special.sku}"></th:block> Specials config!</button></td>
               </form>
             </tr>
           </table>
@@ -76,7 +77,7 @@
   </div>
 
   <div class="row col-md-6 offset-md-3">
-    <table>
+    <table style="border: 4px solid green">
       <tr>
         <td colspan="3"><h3>Your order:</h3></td>
       </tr>
@@ -95,7 +96,7 @@
       </tr>
       <tr th:if="${not #lists.isEmpty(items)}">
         <td colspan="2"></td>
-        <td>Bill: <span th:text="${bill}"></span></td>
+        <td><strong>Total Bill: <span th:text="${bill}"></span></strong></td>
       </tr>
     </table>
   </div>

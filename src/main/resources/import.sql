@@ -4,8 +4,8 @@ INSERT INTO prices (sku, unit_price) VALUES ('C', 25);
 INSERT INTO prices (sku, unit_price) VALUES ('D', 150);
 INSERT INTO prices (sku, unit_price) VALUES ('E', 200);
 
-INSERT INTO specials (sku, n_sku, one_free, special_price, special_price_desc) VALUES ('A', '', false, 0, '');
-INSERT INTO specials (sku, n_sku, one_free, special_price, special_price_desc) VALUES ('B', 'B,B', false, 125, '2 for £1.25');
-INSERT INTO specials (sku, n_sku, one_free, special_price, special_price_desc) VALUES ('C', 'C,C,C', true, 0, 'Buy 3, get one free');
-INSERT INTO specials (sku, n_sku, one_free, special_price, special_price_desc) VALUES ('D', 'D,E', false, 300, 'Buy D and E for £3');
-INSERT INTO specials (sku, n_sku, one_free, special_price, special_price_desc) VALUES ('E', 'D,E', false, 300, 'Buy D and E for £3');
+INSERT INTO specials (sku, n_sku, special_price, special_price_desc, promotion) VALUES ('A', 'AAA', 130, '3 for £1.30', 1);
+INSERT INTO specials (sku, n_sku, special_price, special_price_desc, promotion) VALUES ('B', 'BB', 125, '2 for £1.25', 1);
+INSERT INTO specials (sku, n_sku, special_price, special_price_desc, promotion) VALUES ('C', 'CCC', 0, 'Buy 3, get one free', 2);
+INSERT INTO specials (sku, n_sku, special_price, special_price_desc, promotion) VALUES ('D', 'DE', 300, 'Buy D and E for £3', 3);
+INSERT INTO specials (sku, n_sku, special_price, special_price_desc, promotion) VALUES ('E', 'DE', 300, 'Buy D and E for £3', 3);

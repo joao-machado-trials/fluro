@@ -17,14 +17,14 @@ data class Special(
     @Column(name = "n_sku")
     var nSku: String,
 
-    @Column(name = "one_free")
-    var oneFree: Boolean,
-
     @Column(name = "special_price")
     var specialPrice: String,
 
     @Column(name = "special_price_desc")
-    var specialPriceDesc: String
+    var specialPriceDesc: String,
+
+    @Column(name = "promotion")
+    var promotion: String
     ) {
 
     override fun equals(other: Any?): Boolean {
@@ -36,10 +36,10 @@ data class Special(
     if (id != other.id) return false
     if (sku != other.sku) return false
     if (nSku != other.nSku) return false
-    if (oneFree != other.oneFree) return false
     if (specialPrice != other.specialPrice) return false
+    if (specialPriceDesc != other.specialPriceDesc) return false
 
-    return specialPriceDesc == other.specialPriceDesc
+    return promotion == other.promotion
   }
 
   override fun hashCode(): Int {
