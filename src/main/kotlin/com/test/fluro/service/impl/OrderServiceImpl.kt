@@ -159,7 +159,7 @@ class OrderServiceImpl : OrderService {
             if (price != null) {
                 price = Price(price.id, price.sku, unitPrice)
                 priceRepository.save(price)
-                itemRepository.deleteBySku(sku)
+                itemRepository.deleteAll()
             }
         } catch (e: NumberFormatException) {
             println("Number Format error")
@@ -174,7 +174,7 @@ class OrderServiceImpl : OrderService {
             if (special != null) {
                 special = Special(special.id, special.sku, nSku, specialPrice, specialPriceDesc, promotion)
                 specialRepository.save(special)
-                itemRepository.deleteBySku(sku)
+                itemRepository.deleteAll()
             }
         } catch (e: NumberFormatException) {
             println("Number Format error")

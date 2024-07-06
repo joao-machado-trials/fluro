@@ -12,9 +12,4 @@ interface ItemRepository : JpaRepository<Item, Long> {
 
     @Query("SELECT new Item(i.id, i.sku, i.skuQuant, i.skuTotal) FROM Item i WHERE i.sku = :sku")
     fun findBySku(sku: String?): Item?
-
-    @Modifying
-    @Transactional
-    @Query("DELETE FROM Item i WHERE i.sku = :sku")
-    fun deleteBySku(sku: String?)
 }
