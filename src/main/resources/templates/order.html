@@ -62,6 +62,7 @@
               <td style="text-align: justify"><input id="specialPriceDesc" name="specialPriceDesc" type="text" size="20" th:value="${special.specialPriceDesc}" /></td>
               <td style="text-align: justify">
                 <select id="promotion" name="promotion">
+                  <option th:selected="${special.promotion} == 0" th:value="0" th:text="No_Promotion"></option>
                   <option th:selected="${special.promotion} == 1" th:value="1" th:text="Multi_Priced"></option>
                   <option th:selected="${special.promotion} == 2" th:value="2" th:text="One_Free"></option>
                   <option th:selected="${special.promotion} == 3" th:value="3" th:text="Meal_DeaL"></option>

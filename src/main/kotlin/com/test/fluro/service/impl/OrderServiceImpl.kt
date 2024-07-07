@@ -75,7 +75,7 @@ class OrderServiceImpl : OrderService {
 
             var check = item.skuQuant
             var flag = true
-            var discountOneFree = 0
+            val discountOneFree: Int?
 
             val nSkuIt = special.nSku.trim().split("").filter { it.isNotEmpty() }
             if (nSkuIt.isNotEmpty()) {
@@ -121,7 +121,7 @@ class OrderServiceImpl : OrderService {
 
     override fun applyMealDeal(sku: String) {
 
-        var item = itemRepository.findBySku(sku)
+        val item = itemRepository.findBySku(sku)
         val special = specialRepository.findBySku(sku)
 
         if (item != null && special!!.promotion == "3") {
@@ -137,15 +137,25 @@ class OrderServiceImpl : OrderService {
                 }
 
                 if (flag) {
+                    item.skuQuant = 1
+                    item.skuTotal = discountMealDeal.toString()
+                    item.sku = "Meal Deal - "
                     for (skuIt in nSkuIt) {
-                        item = itemRepository.findBySku(skuIt)
-                        if (sku == item!!.sku) {
-                            item.skuTotal = discountMealDeal.toString()
-                        } else {
-                            item.skuTotal = "Meal deal discount"
+                        item.sku += skuIt
+
+                        val priceSec = priceRepository.findBySku(skuIt)
+                        val itemSec = itemRepository.findBySku(skuIt)
+                        itemSec!!.skuQuant -= 1
+                        itemSec!!.skuTotal = (itemSec.skuTotal.toInt() - priceSec!!.unitPrice.toInt()).toString()
+                        if (itemSec.skuQuant <= 0) {
+                            itemSec.skuQuant = 0
+                            itemSec.skuTotal = 0.toString()
                         }
-                        itemRepository.save(item)
+                        itemRepository.save(itemSec)
                     }
+                    itemRepository.deleteBySku(item.sku)
+                    item.id = null
+                    itemRepository.save(item)
                 }
             }
         }
