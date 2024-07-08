@@ -1,6 +1,6 @@
 # fluro
 
-Hi, everyone, time to finish this task.
+Hi, time to finish this task.
 My apologies for not making it better, there are things to improve on "meal deal", but with time i would have solved it.
 It has been a busy week unfortunately.
 
@@ -21,7 +21,9 @@ maneuver and understand, they run the logic for the specials in text. You will g
 
 The app is built with best practices as far as i can tell, i just needed more time.
 
-Its built in Kotlin, my first try. As per requirement.
-Im also attaching to the repository the jar file you can then run independently to run the assessment with "java -jar jarname" if there are any problems with IntelliJ.
+Its built in Kotlin, as per requirement.
 
-Would love to have a chance with Fluro. Had a busy week, Thank you.
+
+I point out also that the special Meal Deal is not working as it should be, but i assume the mistake is mine and would have fixed it had again more time, my apologies, its just bad calculations.
+
+Would love to have a chance with Fluro. Thank you.

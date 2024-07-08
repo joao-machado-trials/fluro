@@ -142,20 +142,24 @@ class OrderServiceImpl : OrderService {
                     item.sku = "Meal Deal - "
                     for (skuIt in nSkuIt) {
                         item.sku += skuIt
-
-                        val priceSec = priceRepository.findBySku(skuIt)
-                        val itemSec = itemRepository.findBySku(skuIt)
-                        itemSec!!.skuQuant -= 1
-                        itemSec!!.skuTotal = (itemSec.skuTotal.toInt() - priceSec!!.unitPrice.toInt()).toString()
-                        if (itemSec.skuQuant <= 0) {
-                            itemSec.skuQuant = 0
-                            itemSec.skuTotal = 0.toString()
-                        }
-                        itemRepository.save(itemSec)
                     }
                     itemRepository.deleteBySku(item.sku)
                     item.id = null
                     itemRepository.save(item)
+
+                    for (skuIt in nSkuIt) {
+
+                            val priceSec = priceRepository.findBySku(skuIt)
+                            val itemSec = itemRepository.findBySku(skuIt)
+                            itemSec!!.skuQuant -= 1
+                            itemSec!!.skuTotal = (itemSec.skuTotal.toInt() - priceSec!!.unitPrice.toInt()).toString()
+                            if (itemSec.skuQuant <= 0) {
+                                itemSec.skuQuant = 0
+                                itemSec.skuTotal = 0.toString()
+                            }
+                            itemRepository.save(itemSec)
+
+                    }
                 }
             }
         }
